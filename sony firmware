@@ -1,0 +1,33 @@
+//mobile
+cd /data/local/tmp
+mkdir kernel
+cd kernel
+for ii in /dev/block/m*
+do
+BASE=`../busybox basename $ii`
+dd if=$ii of=$BASE count=1 2> /dev/null;
+done
+grep ANDROID
+
+
+dd if=/dev/block/(filename) of=./boot.img
+
+//linux
+
+adb pull /data/local/tmp/boot.img ./boot.img
+binwalk boot.img
+result:
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             ELF, 32-bit LSB executable, ARM, version 1 (ARM)
+6096          0x17D0          LZO compressed data
+6420          0x1914          LZO compressed data
+4856544       0x4A1AE0        Cisco IOS microcode, for " "
+6638942       0x654D5E        mcrypt 2.5 encrypted data, algorithm: ").", keysize: 26364 bytes, mode: "(",
+6930102       0x69BEB6        mcrypt 2.5 encrypted data, algorithm: "\", keysize: 14717 bytes, mode: "]",
+7057956       0x6BB224        gzip compressed data, from Unix, NULL date (1970-01-01 00:00:00)
+11085349      0xA92625        Certificate in DER format (x509 v3), header length: 4, sequence length: 699
+
+dd if=boot.img bs=6420 skip=1 of=piggy
+lzop -cd piggy > zImage
+kallsymsprint zImage
