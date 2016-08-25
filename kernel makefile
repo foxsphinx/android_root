@@ -1,0 +1,13 @@
+Makefile:
+
+obj-m := aa.o
+all:
+    make ARCH=arm EXTRA_CFLAGS='-D_CONFIG_ARM_ -fno-pic' -C $(KDIR) M=$(PWD) modules
+clean:
+    $(MAKE) -C $(KDIR) M=$(PWD) cleanhe
+
+
+
+compile：
+
+make CROSS_COMPILE=/root/tegra/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi- KDIR=/root/tegra
